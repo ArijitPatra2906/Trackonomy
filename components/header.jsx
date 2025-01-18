@@ -18,7 +18,7 @@ const Header = async () => {
             alt="Trackonomy Logo"
             width={200}
             height={60}
-            className="h-14 lg:h-28 w-auto object-contain"
+            className="h-20 lg:h-28 w-auto object-contain"
           />
         </Link>
 

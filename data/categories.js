@@ -76,6 +76,13 @@ export const defaultCategories = [
     subcategories: ["Electricity", "Water", "Gas", "Internet", "Phone"],
   },
   {
+    id: "investments",
+    name: "Investments",
+    type: "EXPENSE",
+    color: "#6366f1", // indigo-500
+    icon: "TrendingUp",
+  },
+  {
     id: "entertainment",
     name: "Entertainment",
     type: "EXPENSE",
