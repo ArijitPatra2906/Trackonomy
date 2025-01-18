@@ -4,6 +4,7 @@ import {
   Head,
   Heading,
   Html,
+  Img,
   Preview,
   Section,
   Text,
@@ -47,37 +48,45 @@ const PREVIEW_DATA = {
 
 export default function EmailTemplate({
   userName = "",
-  type = "budget-alert",
+  type = "monthly-report",
   data = {},
 }) {
   if (type === "monthly-report") {
     return (
       <Html>
         <Head />
-        <Preview>Your Monthly Financial Report</Preview>
+        <Preview>Your Monthly Budget Tracking Report</Preview>
         <Body style={styles.body}>
           <Container style={styles.container}>
-            <Heading style={styles.title}>Monthly Financial Report</Heading>
-
+            {/* <Container style={styles.logo}>
+              <Img
+                alt="logo"
+                height={100}
+                src="https://trackonomy.vercel.app/_next/image?url=%2Flogo.png&w=256&q=75"
+              />
+            </Container> */}
+            <Heading style={styles.title}>
+              Monthly Budget Tracking Report
+            </Heading>
             <Text style={styles.text}>Hello {userName},</Text>
             <Text style={styles.text}>
-              Here&rsquo;s your financial summary for {data?.month}:
+              Here&rsquo;s your budget summary for {data?.month}:
             </Text>
 
             {/* Main Stats */}
             <Section style={styles.statsContainer}>
               <div style={styles.stat}>
                 <Text style={styles.text}>Total Income</Text>
-                <Text style={styles.heading}>${data?.stats.totalIncome}</Text>
+                <Text style={styles.heading}>₹{data?.stats.totalIncome}</Text>
               </div>
               <div style={styles.stat}>
                 <Text style={styles.text}>Total Expenses</Text>
-                <Text style={styles.heading}>${data?.stats.totalExpenses}</Text>
+                <Text style={styles.heading}>₹{data?.stats.totalExpenses}</Text>
               </div>
               <div style={styles.stat}>
                 <Text style={styles.text}>Net</Text>
                 <Text style={styles.heading}>
-                  ${data?.stats.totalIncome - data?.stats.totalExpenses}
+                  ₹{data?.stats.totalIncome - data?.stats.totalExpenses}
                 </Text>
               </div>
             </Section>
@@ -90,7 +99,7 @@ export default function EmailTemplate({
                   ([category, amount]) => (
                     <div key={category} style={styles.row}>
                       <Text style={styles.text}>{category}</Text>
-                      <Text style={styles.text}>${amount}</Text>
+                      <Text style={styles.text}>₹{amount}</Text>
                     </div>
                   )
                 )}
@@ -100,7 +109,7 @@ export default function EmailTemplate({
             {/* AI Insights */}
             {data?.insights && (
               <Section style={styles.section}>
-                <Heading style={styles.heading}>Welth Insights</Heading>
+                <Heading style={styles.heading}>Trackonomy Insights</Heading>
                 {data.insights.map((insight, index) => (
                   <Text key={index} style={styles.text}>
                     • {insight}
@@ -110,8 +119,8 @@ export default function EmailTemplate({
             )}
 
             <Text style={styles.footer}>
-              Thank you for using Welth. Keep tracking your finances for better
-              financial health!
+              Thank you for using Trackonomy. Keep tracking your finances for
+              better financial health!
             </Text>
           </Container>
         </Body>
@@ -127,6 +136,13 @@ export default function EmailTemplate({
         <Body style={styles.body}>
           <Container style={styles.container}>
             <Heading style={styles.title}>Budget Alert</Heading>
+            {/* <Container style={styles.logo}>
+              <Img
+                alt="logo"
+                height={100}
+                src="https://trackonomy.vercel.app/_next/image?url=%2Flogo.png&w=256&q=75"
+              />
+            </Container> */}
             <Text style={styles.text}>Hello {userName},</Text>
             <Text style={styles.text}>
               You&rsquo;ve used {data?.percentageUsed.toFixed(1)}% of your
@@ -148,6 +164,10 @@ export default function EmailTemplate({
                 </Text>
               </div>
             </Section>
+            <Text style={styles.footer}>
+              Thank you for using Trackonomy. Keep tracking your finances for
+              better financial health!
+            </Text>
           </Container>
         </Body>
       </Html>
@@ -172,7 +192,7 @@ const styles = {
     fontSize: "32px",
     fontWeight: "bold",
     textAlign: "center",
-    margin: "0 0 20px",
+    margin: "0 0 30px",
   },
   heading: {
     color: "#1f2937",
@@ -184,6 +204,12 @@ const styles = {
     color: "#4b5563",
     fontSize: "16px",
     margin: "0 0 16px",
+    textTransform: "capitalize",
+  },
+  logo: {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
   },
   section: {
     marginTop: "32px",
