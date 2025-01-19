@@ -5,6 +5,7 @@ import {
   CreditCard,
   Globe,
   Zap,
+  MailCheck,
 } from "lucide-react";
 
 // Stats Data
@@ -52,9 +53,10 @@ export const featuresData = [
     description: "Manage multiple accounts and credit cards in one place",
   },
   {
-    icon: <Globe className="h-8 w-8 text-blue-600" />,
-    title: "Multi-Currency",
-    description: "Support for multiple currencies with real-time conversion",
+    icon: <MailCheck className="h-8 w-8 text-blue-600" />,
+    title: "Email Alert",
+    description:
+      "Get monthly reports and budget alerts to track your finances.",
   },
   {
     icon: <Zap className="h-8 w-8 text-blue-600" />,

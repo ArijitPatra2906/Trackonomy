@@ -38,7 +38,7 @@ const HeroSection = () => {
         </p>
         <div className="flex justify-center space-x-4">
           <Link href="/dashboard">
-            <Button size="lg" className="px-8">
+            <Button size="xl" className="px-16">
               Get Started
             </Button>
           </Link>
