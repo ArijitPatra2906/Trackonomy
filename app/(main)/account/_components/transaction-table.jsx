@@ -55,7 +55,7 @@ import useFetch from "@/hooks/use-fetch";
 import { BarLoader } from "react-spinners";
 import { useRouter } from "next/navigation";
 
-const ITEMS_PER_PAGE = 10;
+const ITEMS_PER_PAGE = 15;
 
 const RECURRING_INTERVALS = {
   DAILY: "Daily",
