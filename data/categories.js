@@ -71,7 +71,7 @@ export const defaultCategories = [
     id: "utilities",
     name: "Utilities",
     type: "EXPENSE",
-    color: "#06b6d4", // cyan-500
+    color: "#06b6d4", // cyan-500 -> Duplicate
     icon: "Zap",
     subcategories: ["Electricity", "Water", "Gas", "Internet", "Phone"],
   },
@@ -79,14 +79,14 @@ export const defaultCategories = [
     id: "investments",
     name: "Investments",
     type: "EXPENSE",
-    color: "#6366f1", // indigo-500
+    color: "#8b5cf6", // violet-500 -> Changed to avoid duplicate with INCOME investments
     icon: "TrendingUp",
   },
   {
     id: "entertainment",
     name: "Entertainment",
     type: "EXPENSE",
-    color: "#8b5cf6", // violet-500
+    color: "#facc15", // yellow-500
     icon: "Film",
     subcategories: ["Movies", "Games", "Streaming Services"],
   },
@@ -101,7 +101,7 @@ export const defaultCategories = [
     id: "shopping",
     name: "Shopping",
     type: "EXPENSE",
-    color: "#ec4899", // pink-500
+    color: "#ec4899", // pink-500 -> Duplicate
     icon: "ShoppingBag",
     subcategories: ["Clothing", "Electronics", "Home Goods"],
   },
@@ -117,7 +117,7 @@ export const defaultCategories = [
     id: "education",
     name: "Education",
     type: "EXPENSE",
-    color: "#6366f1", // indigo-500
+    color: "#10b981", // emerald-500
     icon: "GraduationCap",
     subcategories: ["Tuition", "Books", "Courses"],
   },
@@ -140,7 +140,7 @@ export const defaultCategories = [
     id: "insurance",
     name: "Insurance",
     type: "EXPENSE",
-    color: "#64748b", // slate-500
+    color: "#64748b", // slate-500 -> Duplicate
     icon: "Shield",
     subcategories: ["Life", "Home", "Vehicle"],
   },
@@ -152,12 +152,18 @@ export const defaultCategories = [
     icon: "Gift",
   },
   {
-    id: "bills",
-    name: "Bills & Fees",
+    id: "recharge",
+    name: "Recharge",
     type: "EXPENSE",
-    color: "#fb7185", // rose-400
-    icon: "Receipt",
-    subcategories: ["Bank Fees", "Late Fees", "Service Charges"],
+    color: "#e879f9", // purple-400
+    icon: "Recharge",
+  },
+  {
+    id: "emi",
+    name: "EMI",
+    type: "EXPENSE",
+    color: "#fb923c", // amber-400
+    icon: "EMI",
   },
   {
     id: "other-expense",
