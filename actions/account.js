@@ -97,7 +97,7 @@ export async function bulkDeleteTransactions(transactionIds) {
 
     if (!user) throw new Error("User not found");
 
-    // Get transactions to calculate balance changes
+    // Fetch the transactions to calculate the balance changes
     const transactions = await db.transaction.findMany({
       where: {
         id: { in: transactionIds },
@@ -105,19 +105,27 @@ export async function bulkDeleteTransactions(transactionIds) {
       },
     });
 
-    // Group transactions by account to update balances
+    // Validate transactions and ensure the amounts are correct numbers
+    if (!transactions || transactions.length === 0) {
+      throw new Error("No transactions found to delete");
+    }
+
+    // Calculate balance changes per account
     const accountBalanceChanges = transactions.reduce((acc, transaction) => {
-      const change =
-        transaction.type === "EXPENSE"
-          ? transaction.amount
-          : -transaction.amount;
+      const amount = parseFloat(transaction.amount);
+      if (isNaN(amount)) {
+        throw new Error(`Invalid transaction amount for ID ${transaction.id}`);
+      }
+
+      const change = transaction.type === "EXPENSE" ? amount : -amount;
+
       acc[transaction.accountId] = (acc[transaction.accountId] || 0) + change;
       return acc;
     }, {});
 
-    // Delete transactions and update account balances in a transaction
+    // Perform a database transaction to delete and update balances
     await db.$transaction(async (tx) => {
-      // Delete transactions
+      // Delete the specified transactions
       await tx.transaction.deleteMany({
         where: {
           id: { in: transactionIds },
@@ -125,7 +133,7 @@ export async function bulkDeleteTransactions(transactionIds) {
         },
       });
 
-      // Update account balances
+      // Update balances for affected accounts
       for (const [accountId, balanceChange] of Object.entries(
         accountBalanceChanges
       )) {
@@ -133,7 +141,7 @@ export async function bulkDeleteTransactions(transactionIds) {
           where: { id: accountId },
           data: {
             balance: {
-              increment: balanceChange,
+              increment: balanceChange, // Adjust the balance correctly
             },
           },
         });

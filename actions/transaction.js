@@ -79,6 +79,8 @@ export async function createTransaction(data) {
             data.isRecurring && data.recurringInterval
               ? calculateNextRecurringDate(data.date, data.recurringInterval)
               : null,
+          lastProcessed:
+            data.isRecurring && data.recurringInterval ? data.date : null,
         },
       });
 
