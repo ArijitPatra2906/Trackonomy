@@ -167,12 +167,13 @@ export function TransactionTable({ transactions }) {
   const handleBulkDelete = async () => {
     if (
       !window.confirm(
-        `Are you sure you want to delete ₹{selectedIds.length} transactions?`
+        `Are you sure you want to delete ${selectedIds?.length} transactions?`
       )
     )
       return;
 
     deleteFn(selectedIds);
+    setSelectedIds([]);
   };
 
   useEffect(() => {
