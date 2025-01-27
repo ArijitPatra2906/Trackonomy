@@ -9,6 +9,21 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata = {
   title: "Trackonomy",
   description: "One stop Finance Platform",
+  generator: "Next.js",
+  manifest: "/manifest.json",
+  keywords: ["nextjs"],
+  themeColor: [{ media: "(prefers-color-scheme: dark)", color: "#fff" }],
+  authors: [
+    {
+      name: "Arijit Patra",
+    },
+  ],
+  viewport:
+    "minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, viewport-fit=cover",
+  icons: [
+    { rel: "apple-touch-icon", url: "icons/android-chrome-192x192.png" },
+    { rel: "icon", url: "icons/android-chrome-192x192.png" },
+  ],
 };
 
 export default function RootLayout({ children }) {
