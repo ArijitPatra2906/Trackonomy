@@ -12,6 +12,7 @@ import {
   ChevronRight,
   RefreshCw,
   Clock,
+  Download,
 } from "lucide-react";
 import { format } from "date-fns";
 import { toast } from "sonner";
@@ -54,7 +55,7 @@ import { bulkDeleteTransactions } from "@/actions/account";
 import useFetch from "@/hooks/use-fetch";
 import { BarLoader } from "react-spinners";
 import { useRouter } from "next/navigation";
-
+import * as XLSX from "xlsx";
 const ITEMS_PER_PAGE = 15;
 
 const RECURRING_INTERVALS = {
@@ -194,6 +195,27 @@ export function TransactionTable({ transactions }) {
     setSelectedIds([]);
   };
 
+  const handleExportToExcel = () => {
+    const data = filteredAndSortedTransactions
+      .sort((a, b) => a.date - b.date)
+      .map((transaction) => ({
+        Date: format(new Date(transaction.date), "PP"),
+        Description: transaction.description,
+        Amount: transaction.amount,
+        Type: transaction.type,
+        Recurring: transaction?.isRecurring ? true : false,
+      }));
+
+    // Create a worksheet and workbook
+    const worksheet = XLSX.utils.json_to_sheet(data);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, "Transactions");
+
+    const currentDateMonthYear = format(new Date(), "dd-MMMM-yyyy");
+    const fileName = `${currentDateMonthYear}-trackonomy.xlsx`;
+    XLSX.writeFile(workbook, fileName);
+  };
+
   return (
     <div className="space-y-4">
       {deleteLoading && (
@@ -245,7 +267,10 @@ export function TransactionTable({ transactions }) {
               <SelectItem value="non-recurring">Non-recurring Only</SelectItem>
             </SelectContent>
           </Select>
-
+          <Button variant="default" size="sm" onClick={handleExportToExcel}>
+            <Download className="h-4 w-4 mr-2" />
+            Export
+          </Button>
           {/* Bulk Actions */}
           {selectedIds.length > 0 && (
             <div className="flex items-center gap-2">
@@ -267,7 +292,7 @@ export function TransactionTable({ transactions }) {
               onClick={handleClearFilters}
               title="Clear filters"
             >
-              <X className="h-4 w-5" />
+              <RefreshCw className="h-4 w-5" />
               Reset Filter
             </Button>
           )}
