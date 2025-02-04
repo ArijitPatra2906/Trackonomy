@@ -12,9 +12,9 @@ import {
   ChevronRight,
   RefreshCw,
   Clock,
-  Download,
+  Calendar,
 } from "lucide-react";
-import { format } from "date-fns";
+import { format, isAfter, isBefore, parseISO } from "date-fns";
 import { toast } from "sonner";
 
 import {
@@ -55,7 +55,8 @@ import { bulkDeleteTransactions } from "@/actions/account";
 import useFetch from "@/hooks/use-fetch";
 import { BarLoader } from "react-spinners";
 import { useRouter } from "next/navigation";
-import * as XLSX from "xlsx";
+import ExportButton from "./export_button";
+
 const ITEMS_PER_PAGE = 15;
 
 const RECURRING_INTERVALS = {
@@ -73,6 +74,8 @@ export function TransactionTable({ transactions }) {
     field: "date",
     direction: "desc",
   });
+  const [fromDate, setFromDate] = useState("");
+  const [toDate, setToDate] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [typeFilter, setTypeFilter] = useState("");
   const [recurringFilter, setRecurringFilter] = useState("");
@@ -100,6 +103,18 @@ export function TransactionTable({ transactions }) {
       });
     }
 
+    if (fromDate) {
+      result = result.filter((transaction) =>
+        isAfter(new Date(transaction.date), new Date(fromDate))
+      );
+    }
+
+    if (toDate) {
+      result = result.filter((transaction) =>
+        isBefore(new Date(transaction.date), new Date(toDate))
+      );
+    }
+
     result.sort((a, b) => {
       let comparison = 0;
 
@@ -121,7 +136,15 @@ export function TransactionTable({ transactions }) {
     });
 
     return result;
-  }, [transactions, searchTerm, typeFilter, recurringFilter, sortConfig]);
+  }, [
+    transactions,
+    searchTerm,
+    typeFilter,
+    recurringFilter,
+    sortConfig,
+    fromDate,
+    toDate,
+  ]);
 
   const totalPages = Math.ceil(
     filteredAndSortedTransactions.length / ITEMS_PER_PAGE
@@ -188,32 +211,13 @@ export function TransactionTable({ transactions }) {
     setTypeFilter("");
     setRecurringFilter("");
     setCurrentPage(1);
+    setFromDate("");
+    setToDate("");
   };
 
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
     setSelectedIds([]);
-  };
-
-  const handleExportToExcel = () => {
-    const data = filteredAndSortedTransactions
-      .sort((a, b) => a.date - b.date)
-      .map((transaction) => ({
-        Date: format(new Date(transaction.date), "PP"),
-        Description: transaction.description,
-        Amount: transaction.amount,
-        Type: transaction.type,
-        Recurring: transaction?.isRecurring ? true : false,
-      }));
-
-    // Create a worksheet and workbook
-    const worksheet = XLSX.utils.json_to_sheet(data);
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Transactions");
-
-    const currentDateMonthYear = format(new Date(), "dd-MMMM-yyyy");
-    const fileName = `${currentDateMonthYear}-trackonomy.xlsx`;
-    XLSX.writeFile(workbook, fileName);
   };
 
   return (
@@ -267,10 +271,29 @@ export function TransactionTable({ transactions }) {
               <SelectItem value="non-recurring">Non-recurring Only</SelectItem>
             </SelectContent>
           </Select>
-          <Button variant="default" size="sm" onClick={handleExportToExcel}>
-            <Download className="h-4 w-4 mr-2" />
-            Export
-          </Button>
+          <div className="flex gap-4">
+            <div className="relative">
+              <Calendar className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
+              <Input
+                type="date"
+                value={fromDate}
+                onChange={(e) => setFromDate(e.target.value)}
+                className="pl-8"
+                placeholder="From Date"
+              />
+            </div>
+            <div className="relative">
+              <Calendar className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
+              <Input
+                type="date"
+                value={toDate}
+                onChange={(e) => setToDate(e.target.value)}
+                className="pl-8"
+                placeholder="To Date"
+              />
+            </div>
+          </div>
+
           {/* Bulk Actions */}
           {selectedIds.length > 0 && (
             <div className="flex items-center gap-2">
@@ -285,7 +308,11 @@ export function TransactionTable({ transactions }) {
             </div>
           )}
 
-          {(searchTerm || typeFilter || recurringFilter) && (
+          {(searchTerm ||
+            typeFilter ||
+            recurringFilter ||
+            fromDate ||
+            toDate) && (
             <Button
               variant="outline"
               size="sm"
@@ -296,6 +323,7 @@ export function TransactionTable({ transactions }) {
               Reset Filter
             </Button>
           )}
+          <ExportButton transactions={filteredAndSortedTransactions} />
         </div>
       </div>
 
