@@ -16,7 +16,6 @@ import {
 } from "lucide-react";
 import { format, isAfter, isBefore, parseISO } from "date-fns";
 import { toast } from "sonner";
-
 import {
   Table,
   TableBody,
@@ -55,7 +54,7 @@ import { bulkDeleteTransactions } from "@/actions/account";
 import useFetch from "@/hooks/use-fetch";
 import { BarLoader } from "react-spinners";
 import { useRouter } from "next/navigation";
-import ExportButton from "./export_button";
+import ExportButton from "./export-button";
 
 const ITEMS_PER_PAGE = 15;
 
