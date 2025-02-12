@@ -34,11 +34,11 @@ export default function RootLayout({ children }) {
           <link rel="icon" href="/logo.png" sizes="any" />
           <meta
             property="og:image"
-            content="/icons/android-chrome-192x192.png"
+            content="https://trackonomy.vercel.app/logo-1200x630.png"
           />
           <meta property="og:image:type" content="image/png" />
-          <meta property="og:image:width" content="192" />
-          <meta property="og:image:height" content="192" />
+          <meta property="og:image:width" content="1200" />
+          <meta property="og:image:height" content="630" />
           <meta
             property="og:title"
             content="Trackonomy - One stop Finance Platform"
