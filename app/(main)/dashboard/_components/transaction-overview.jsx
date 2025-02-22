@@ -36,6 +36,16 @@ export function DashboardOverview({ accounts, transactions }) {
   const [selectedAccountId, setSelectedAccountId] = useState(
     accounts.find((a) => a.isDefault)?.id || accounts[0]?.id
   );
+  const [showLabels, setShowLabels] = useState(true);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setShowLabels(window.innerWidth > 640);
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   // Filter transactions for selected account
   const accountTransactions = transactions.filter(
@@ -145,7 +155,7 @@ export function DashboardOverview({ accounts, transactions }) {
       </Card>
 
       {/* Expense Breakdown Card */}
-      <div className="">
+      <div>
         <Card>
           <CardHeader>
             <CardTitle className="text-base font-normal">
@@ -168,9 +178,11 @@ export function DashboardOverview({ accounts, transactions }) {
                       outerRadius={80}
                       fill="#8884d8"
                       dataKey="value"
-                      //   label={({ name, value }) =>
-                      //     `${name}: $${value.toFixed(2)}`
-                      //   }
+                      label={
+                        showLabels
+                          ? ({ name, value }) => `${name}: ₹${value.toFixed(2)}`
+                          : null
+                      }
                     >
                       {pieChartData.map((entry, index) => (
                         <Cell
