@@ -7,49 +7,51 @@ import { Toaster } from "sonner";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Trackonomy",
-  description: "One stop Finance Platform",
-  generator: "Next.js",
-  manifest: "/manifest.json",
-  keywords: ["nextjs"],
-  themeColor: [{ media: "(prefers-color-scheme: dark)", color: "#fff" }],
-  authors: [
-    {
-      name: "Arijit Patra",
-    },
-  ],
-  viewport:
-    "minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, viewport-fit=cover",
-  icons: [
-    { rel: "apple-touch-icon", url: "icons/android-chrome-192x192.png" },
-    { rel: "icon", url: "icons/android-chrome-192x192.png" },
-  ],
+  title: "Trackonomy - One stop Finance Platform",
+  description:
+    "It is an advanced personal finance app that leverages AI-powered insights to help users take full control of their financial well-being. It enables effortless tracking of daily expenses, automatic categorization for insightful analysis, and real-time monitoring of savings progress toward specific financial goals. Users can set dynamic budgets, receive intelligent spending alerts, and visualize their financial health with interactive charts. The app also provides predictive analytics and future financial projections, allowing users to plan effectively for long-term financial stability. With its modern UI, seamless authentication, and powerful features, Trackonomy simplifies financial management and fosters better financial habits.",
+  keywords: ["Money", "Tracker", "Expence Tracker", "Budget Tracker"],
+  authors: [{ name: "Arijit Patra" }],
+  creator: "Arijit Patra",
+  publisher: "Arijit Patra",
+  formatDetection: {
+    email: "arijitpatra.online@gmail.com",
+    address: "Kolkata",
+    telephone: "+91 6291273442",
+  },
+  openGraph: {
+    title: "Trackonomy - One stop Finance Platform",
+    description:
+      "It is an advanced personal finance app that leverages AI-powered insights to help users take full control of their financial well-being. It enables effortless tracking of daily expenses, automatic categorization for insightful analysis, and real-time monitoring of savings progress toward specific financial goals. Users can set dynamic budgets, receive intelligent spending alerts, and visualize their financial health with interactive charts. The app also provides predictive analytics and future financial projections, allowing users to plan effectively for long-term financial stability. With its modern UI, seamless authentication, and powerful features, Trackonomy simplifies financial management and fosters better financial habits.",
+    url: "https://trackonomy.vercel.app/",
+    siteName: "Trackonomy",
+    images: [
+      {
+        url: "https://trackonomy.vercel.app/og.png",
+        width: 1200,
+        height: 630,
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Trackonomy - One stop Finance Platform",
+    description:
+      "It is an advanced personal finance app that leverages AI-powered insights to help users take full control of their financial well-being. It enables effortless tracking of daily expenses, automatic categorization for insightful analysis, and real-time monitoring of savings progress toward specific financial goals. Users can set dynamic budgets, receive intelligent spending alerts, and visualize their financial health with interactive charts. The app also provides predictive analytics and future financial projections, allowing users to plan effectively for long-term financial stability. With its modern UI, seamless authentication, and powerful features, Trackonomy simplifies financial management and fosters better financial habits.",
+    images: ["https://trackonomy.vercel.app/og.png"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({ children }) {
   return (
     <ClerkProvider>
-      <html lang="en">
-        <head>
-          <link rel="icon" href="/logo.png" sizes="any" />
-          <meta
-            property="og:image"
-            content="https://trackonomy.vercel.app/logo-1200x630.png"
-          />
-          <meta property="og:image:type" content="image/png" />
-          <meta property="og:image:width" content="1200" />
-          <meta property="og:image:height" content="630" />
-          <meta
-            property="og:title"
-            content="Trackonomy - One stop Finance Platform"
-          />
-          <meta
-            property="og:description"
-            content="Manage your finances seamlessly with Trackonomy."
-          />
-          <meta property="og:url" content="https://trackonomy.vercel.app" />
-          <meta property="og:type" content="website" />
-        </head>
+      <html lang="en" suppressHydrationWarning>
         <body className={`${inter.className}`}>
           <Header />
           <main className="min-h-screen">{children}</main>
