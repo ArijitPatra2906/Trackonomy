@@ -69,6 +69,52 @@ body {
   body {
     @apply bg-background text-foreground;
   }
+  /* Width and track styles for Webkit browsers */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  /* Track styles */
+  ::-webkit-scrollbar-track {
+    background: hsl(var(--muted));
+    border-radius: 8px;
+  }
+
+  /* Handle styles */
+  ::-webkit-scrollbar-thumb {
+    background: hsl(var(--muted-foreground));
+    border-radius: 8px;
+    border: 2px solid hsl(var(--muted));
+  }
+
+  /* Handle hover styles */
+  ::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--foreground));
+  }
+
+  /* For Firefox */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--muted-foreground)) hsl(var(--muted));
+  }
+
+  /* For specific elements that need custom scrollbars */
+  .custom-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: hsl(var(--muted-foreground)) hsl(var(--muted));
+  }
+
+  /* Hide scrollbar for Chrome, Safari and Opera but maintain functionality */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Hide scrollbar for IE, Edge and Firefox but maintain functionality */
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
 }
 
 @layer utilities {
