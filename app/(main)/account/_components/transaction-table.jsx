@@ -225,7 +225,8 @@ export function TransactionTable({ transactions }) {
         <BarLoader className="mt-4" width={"100%"} color="#9333ea" />
       )}
       {/* Filters */}
-      <div className="flex flex-col sm:flex-row gap-4">
+      <div className="flex flex-col lg:flex-row gap-4">
+        {/* Search Bar */}
         <div className="relative flex-1">
           <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
           <Input
@@ -235,10 +236,13 @@ export function TransactionTable({ transactions }) {
               setSearchTerm(e.target.value);
               setCurrentPage(1);
             }}
-            className="pl-8"
+            className="pl-8 w-full"
           />
         </div>
-        <div className="flex gap-2 flex-wrap">
+
+        {/* Filters and Buttons Container */}
+        <div className="flex flex-col lg:flex-row gap-4 lg:gap-2 flex-wrap">
+          {/* Type Filter */}
           <Select
             value={typeFilter}
             onValueChange={(value) => {
@@ -246,7 +250,7 @@ export function TransactionTable({ transactions }) {
               setCurrentPage(1);
             }}
           >
-            <SelectTrigger className="w-[130px]">
+            <SelectTrigger className="w-full md:w-[140px]">
               <SelectValue placeholder="All Types" />
             </SelectTrigger>
             <SelectContent>
@@ -255,6 +259,7 @@ export function TransactionTable({ transactions }) {
             </SelectContent>
           </Select>
 
+          {/* Recurring Filter */}
           <Select
             value={recurringFilter}
             onValueChange={(value) => {
@@ -262,7 +267,7 @@ export function TransactionTable({ transactions }) {
               setCurrentPage(1);
             }}
           >
-            <SelectTrigger className="w-[150px]">
+            <SelectTrigger className="w-full md:w-[140px]">
               <SelectValue placeholder="All Transactions" />
             </SelectTrigger>
             <SelectContent>
@@ -270,14 +275,16 @@ export function TransactionTable({ transactions }) {
               <SelectItem value="non-recurring">Non-recurring Only</SelectItem>
             </SelectContent>
           </Select>
-          <div className="flex gap-4">
+
+          {/* Date Range Inputs */}
+          <div className="flex flex-col sm:flex-row gap-2">
             <div className="relative">
               <Calendar className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
               <Input
                 type="date"
                 value={fromDate}
                 onChange={(e) => setFromDate(e.target.value)}
-                className="pl-8"
+                className="pl-8 w-full lg:w-[130px]"
                 placeholder="From Date"
               />
             </div>
@@ -287,219 +294,232 @@ export function TransactionTable({ transactions }) {
                 type="date"
                 value={toDate}
                 onChange={(e) => setToDate(e.target.value)}
-                className="pl-8"
+                className="pl-8 w-full lg:w-[130px]"
                 placeholder="To Date"
               />
             </div>
           </div>
 
-          {/* Bulk Actions */}
-          {selectedIds.length > 0 && (
-            <div className="flex items-center gap-2">
+          {/* Action Buttons */}
+          <div className="flex gap-2 flex-wrap">
+            {selectedIds.length > 0 && (
               <Button
                 variant="destructive"
                 size="sm"
                 onClick={handleBulkDelete}
+                className="flex-shrink-0"
               >
                 <Trash className="h-4 w-4 mr-2" />
                 Delete Selected ({selectedIds.length})
               </Button>
-            </div>
-          )}
+            )}
 
-          {(searchTerm ||
-            typeFilter ||
-            recurringFilter ||
-            fromDate ||
-            toDate) && (
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={handleClearFilters}
-              title="Clear filters"
-            >
-              <RefreshCw className="h-4 w-5" />
-              Reset Filter
-            </Button>
-          )}
-          <ExportButton transactions={filteredAndSortedTransactions} />
+            {(searchTerm ||
+              typeFilter ||
+              recurringFilter ||
+              fromDate ||
+              toDate) && (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={handleClearFilters}
+                title="Clear filters"
+                className="flex-shrink-0"
+              >
+                <RefreshCw className="h-4 w-4 mr-2" />
+                Reset Filter
+              </Button>
+            )}
+
+            <ExportButton
+              transactions={filteredAndSortedTransactions}
+              className="flex-shrink-0"
+            />
+          </div>
         </div>
       </div>
 
       {/* Transactions Table */}
-      <div className="rounded-md border">
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead className="w-[50px]">
-                <Checkbox
-                  checked={
-                    selectedIds.length === paginatedTransactions.length &&
-                    paginatedTransactions.length > 0
-                  }
-                  onCheckedChange={handleSelectAll}
-                />
-              </TableHead>
-              <TableHead
-                className="cursor-pointer"
-                onClick={() => handleSort("date")}
-              >
-                <div className="flex items-center">
-                  Date
-                  {sortConfig.field === "date" &&
-                    (sortConfig.direction === "asc" ? (
-                      <ChevronUp className="ml-1 h-4 w-4" />
-                    ) : (
-                      <ChevronDown className="ml-1 h-4 w-4" />
-                    ))}
-                </div>
-              </TableHead>
-              <TableHead>Description</TableHead>
-              <TableHead
-                className="cursor-pointer"
-                onClick={() => handleSort("category")}
-              >
-                <div className="flex items-center">
-                  Category
-                  {sortConfig.field === "category" &&
-                    (sortConfig.direction === "asc" ? (
-                      <ChevronUp className="ml-1 h-4 w-4" />
-                    ) : (
-                      <ChevronDown className="ml-1 h-4 w-4" />
-                    ))}
-                </div>
-              </TableHead>
-              <TableHead
-                className="cursor-pointer text-right"
-                onClick={() => handleSort("amount")}
-              >
-                <div className="flex items-center justify-end">
-                  Amount
-                  {sortConfig.field === "amount" &&
-                    (sortConfig.direction === "asc" ? (
-                      <ChevronUp className="ml-1 h-4 w-4" />
-                    ) : (
-                      <ChevronDown className="ml-1 h-4 w-4" />
-                    ))}
-                </div>
-              </TableHead>
-              <TableHead>Recurring</TableHead>
-              <TableHead className="w-[50px]" />
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {paginatedTransactions.length === 0 ? (
+      <div className="w-full overflow-hidden rounded-md border">
+        <div className="overflow-x-auto custom-scrollbar">
+          <Table>
+            <TableHeader>
               <TableRow>
-                <TableCell
-                  colSpan={7}
-                  className="text-center text-muted-foreground"
+                <TableHead className="w-[50px] sticky left-0 bg-background">
+                  <Checkbox
+                    checked={
+                      selectedIds.length === paginatedTransactions.length &&
+                      paginatedTransactions.length > 0
+                    }
+                    onCheckedChange={handleSelectAll}
+                  />
+                </TableHead>
+                <TableHead
+                  className="cursor-pointer min-w-[120px]"
+                  onClick={() => handleSort("date")}
                 >
-                  No transactions found
-                </TableCell>
+                  <div className="flex items-center">
+                    Date
+                    {sortConfig.field === "date" &&
+                      (sortConfig.direction === "asc" ? (
+                        <ChevronUp className="ml-1 h-4 w-4" />
+                      ) : (
+                        <ChevronDown className="ml-1 h-4 w-4" />
+                      ))}
+                  </div>
+                </TableHead>
+                <TableHead className="min-w-[200px]">Description</TableHead>
+                <TableHead
+                  className="cursor-pointer min-w-[120px]"
+                  onClick={() => handleSort("category")}
+                >
+                  <div className="flex items-center">
+                    Category
+                    {sortConfig.field === "category" &&
+                      (sortConfig.direction === "asc" ? (
+                        <ChevronUp className="ml-1 h-4 w-4" />
+                      ) : (
+                        <ChevronDown className="ml-1 h-4 w-4" />
+                      ))}
+                  </div>
+                </TableHead>
+                <TableHead
+                  className="cursor-pointer text-right min-w-[120px]"
+                  onClick={() => handleSort("amount")}
+                >
+                  <div className="flex items-center justify-end">
+                    Amount
+                    {sortConfig.field === "amount" &&
+                      (sortConfig.direction === "asc" ? (
+                        <ChevronUp className="ml-1 h-4 w-4" />
+                      ) : (
+                        <ChevronDown className="ml-1 h-4 w-4" />
+                      ))}
+                  </div>
+                </TableHead>
+                <TableHead className="min-w-[150px]">Recurring</TableHead>
+                <TableHead className="w-[50px] sticky right-0 bg-background" />
               </TableRow>
-            ) : (
-              paginatedTransactions.map((transaction) => (
-                <TableRow key={transaction.id}>
-                  <TableCell>
-                    <Checkbox
-                      checked={selectedIds.includes(transaction.id)}
-                      onCheckedChange={() => handleSelect(transaction.id)}
-                    />
-                  </TableCell>
-                  <TableCell>
-                    {format(new Date(transaction.date), "PP")}
-                  </TableCell>
-                  <TableCell>{transaction.description}</TableCell>
-                  <TableCell className="capitalize">
-                    <span
-                      style={{
-                        background: categoryColors[transaction.category],
-                      }}
-                      className="px-2 py-1 rounded text-white text-sm"
-                    >
-                      {transaction.category}
-                    </span>
-                  </TableCell>
+            </TableHeader>
+            <TableBody>
+              {paginatedTransactions.length === 0 ? (
+                <TableRow>
                   <TableCell
-                    className={cn(
-                      "text-right font-medium",
-                      transaction.type === "EXPENSE"
-                        ? "text-red-500"
-                        : "text-green-500"
-                    )}
+                    colSpan={7}
+                    className="text-center text-muted-foreground h-32"
                   >
-                    {transaction.type === "EXPENSE" ? "-" : "+"}₹
-                    {transaction.amount.toFixed(2)}
-                  </TableCell>
-                  <TableCell>
-                    {transaction.isRecurring ? (
-                      <TooltipProvider>
-                        <Tooltip>
-                          <TooltipTrigger>
-                            <Badge
-                              variant="secondary"
-                              className="gap-1 bg-purple-100 text-purple-700 hover:bg-purple-200"
-                            >
-                              <RefreshCw className="h-3 w-3" />
-                              {
-                                RECURRING_INTERVALS[
-                                  transaction.recurringInterval
-                                ]
-                              }
-                            </Badge>
-                          </TooltipTrigger>
-                          <TooltipContent>
-                            <div className="text-sm">
-                              <div className="font-medium">Next Date:</div>
-                              <div>
-                                {format(
-                                  new Date(transaction.nextRecurringDate),
-                                  "PPP"
-                                )}
-                              </div>
-                            </div>
-                          </TooltipContent>
-                        </Tooltip>
-                      </TooltipProvider>
-                    ) : (
-                      <Badge variant="outline" className="gap-1">
-                        <Clock className="h-3 w-3" />
-                        One-time
-                      </Badge>
-                    )}
-                  </TableCell>
-                  <TableCell>
-                    <DropdownMenu>
-                      <DropdownMenuTrigger asChild>
-                        <Button variant="ghost" className="h-8 w-8 p-0">
-                          <MoreHorizontal className="h-4 w-4" />
-                        </Button>
-                      </DropdownMenuTrigger>
-                      <DropdownMenuContent align="end">
-                        <DropdownMenuItem
-                          onClick={() =>
-                            router.push(
-                              `/transaction/create?edit=${transaction.id}`
-                            )
-                          }
-                        >
-                          Edit
-                        </DropdownMenuItem>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuItem
-                          className="text-destructive"
-                          onClick={() => deleteFn([transaction.id])}
-                        >
-                          Delete
-                        </DropdownMenuItem>
-                      </DropdownMenuContent>
-                    </DropdownMenu>
+                    No transactions found
                   </TableCell>
                 </TableRow>
-              ))
-            )}
-          </TableBody>
-        </Table>
+              ) : (
+                paginatedTransactions.map((transaction) => (
+                  <TableRow key={transaction.id}>
+                    <TableCell className="sticky left-0 bg-background">
+                      <Checkbox
+                        checked={selectedIds.includes(transaction.id)}
+                        onCheckedChange={() => handleSelect(transaction.id)}
+                      />
+                    </TableCell>
+                    <TableCell>
+                      {format(new Date(transaction.date), "PP")}
+                    </TableCell>
+                    <TableCell className="max-w-[200px] truncate">
+                      {transaction.description}
+                    </TableCell>
+                    <TableCell className="capitalize">
+                      <span
+                        style={{
+                          background: categoryColors[transaction.category],
+                        }}
+                        className="px-2 py-1 rounded text-white text-sm whitespace-nowrap"
+                      >
+                        {transaction.category}
+                      </span>
+                    </TableCell>
+                    <TableCell
+                      className={cn(
+                        "text-right font-medium whitespace-nowrap",
+                        transaction.type === "EXPENSE"
+                          ? "text-red-500"
+                          : "text-green-500"
+                      )}
+                    >
+                      {transaction.type === "EXPENSE" ? "-" : "+"}₹
+                      {transaction.amount.toFixed(2)}
+                    </TableCell>
+                    <TableCell>
+                      {transaction.isRecurring ? (
+                        <TooltipProvider>
+                          <Tooltip>
+                            <TooltipTrigger>
+                              <Badge
+                                variant="secondary"
+                                className="gap-1 bg-purple-100 text-purple-700 hover:bg-purple-200 whitespace-nowrap"
+                              >
+                                <RefreshCw className="h-3 w-3" />
+                                {
+                                  RECURRING_INTERVALS[
+                                    transaction.recurringInterval
+                                  ]
+                                }
+                              </Badge>
+                            </TooltipTrigger>
+                            <TooltipContent>
+                              <div className="text-sm">
+                                <div className="font-medium">Next Date:</div>
+                                <div>
+                                  {format(
+                                    new Date(transaction.nextRecurringDate),
+                                    "PPP"
+                                  )}
+                                </div>
+                              </div>
+                            </TooltipContent>
+                          </Tooltip>
+                        </TooltipProvider>
+                      ) : (
+                        <Badge
+                          variant="outline"
+                          className="gap-1 whitespace-nowrap"
+                        >
+                          <Clock className="h-3 w-3" />
+                          One-time
+                        </Badge>
+                      )}
+                    </TableCell>
+                    <TableCell className="sticky right-0 bg-background">
+                      <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                          <Button variant="ghost" className="h-8 w-8 p-0">
+                            <MoreHorizontal className="h-4 w-4" />
+                          </Button>
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent align="end">
+                          <DropdownMenuItem
+                            onClick={() =>
+                              router.push(
+                                `/transaction/create?edit=${transaction.id}`
+                              )
+                            }
+                          >
+                            Edit
+                          </DropdownMenuItem>
+                          <DropdownMenuSeparator />
+                          <DropdownMenuItem
+                            className="text-destructive"
+                            onClick={() => deleteFn([transaction.id])}
+                          >
+                            Delete
+                          </DropdownMenuItem>
+                        </DropdownMenuContent>
+                      </DropdownMenu>
+                    </TableCell>
+                  </TableRow>
+                ))
+              )}
+            </TableBody>
+          </Table>
+        </div>
       </div>
 
       {/* Pagination */}
