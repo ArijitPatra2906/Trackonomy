@@ -3,8 +3,8 @@ import { Twitter, Linkedin, Github } from "lucide-react";
 
 export default function Footer() {
   return (
-    <footer className="bg-gradient-to-r from-[#34ebbd4b] to-[#c2f0e8] border-t border-gray-300 py-10">
-      <div className="container mx-auto px-6 md:px-10">
+    <footer className="bg-white border-t border-gray-200">
+      <div className="container mx-auto px-4 md:px-6 py-12">
         {/* Logo and Tagline */}
         <div className="flex flex-col items-center space-y-4">
           <Image
@@ -44,7 +44,7 @@ export default function Footer() {
                 href={social.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-3 rounded-full bg-white shadow-md hover:bg-gray-200 transition-all"
+                className=""
               >
                 {social.icon}
               </a>
