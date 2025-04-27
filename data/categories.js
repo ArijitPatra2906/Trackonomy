@@ -1,180 +1,189 @@
 export const defaultCategories = [
   // Income Categories
   {
-    id: "salary",
-    name: "Salary",
-    type: "INCOME",
-    color: "#22c55e", // green-500
-    icon: "Wallet",
+    id: 'salary',
+    name: 'Salary',
+    type: 'INCOME',
+    color: '#22c55e', // green-500
+    icon: 'Wallet',
   },
   {
-    id: "freelance",
-    name: "Freelance",
-    type: "INCOME",
-    color: "#06b6d4", // cyan-500
-    icon: "Laptop",
+    id: 'freelance',
+    name: 'Freelance',
+    type: 'INCOME',
+    color: '#06b6d4', // cyan-500
+    icon: 'Laptop',
   },
   {
-    id: "investments",
-    name: "Investments",
-    type: "INCOME",
-    color: "#6366f1", // indigo-500
-    icon: "TrendingUp",
+    id: 'investments',
+    name: 'Investments',
+    type: 'INCOME',
+    color: '#6366f1', // indigo-500
+    icon: 'TrendingUp',
   },
   {
-    id: "business",
-    name: "Business",
-    type: "INCOME",
-    color: "#ec4899", // pink-500
-    icon: "Building",
+    id: 'business',
+    name: 'Business',
+    type: 'INCOME',
+    color: '#ec4899', // pink-500
+    icon: 'Building',
   },
   {
-    id: "rental",
-    name: "Rental",
-    type: "INCOME",
-    color: "#f59e0b", // amber-500
-    icon: "Home",
+    id: 'rental',
+    name: 'Rental',
+    type: 'INCOME',
+    color: '#f59e0b', // amber-500
+    icon: 'Home',
   },
   {
-    id: "other-income",
-    name: "Other Income",
-    type: "INCOME",
-    color: "#64748b", // slate-500
-    icon: "Plus",
+    id: 'other-income',
+    name: 'Other Income',
+    type: 'INCOME',
+    color: '#64748b', // slate-500
+    icon: 'Plus',
   },
 
   // Expense Categories
+  // {
+  //   id: 'housing',
+  //   name: 'Housing',
+  //   type: 'EXPENSE',
+  //   color: '#ef4444', // red-500
+  //   icon: 'Home',
+  //   subcategories: ['Rent', 'Mortgage', 'Property Tax', 'Maintenance'],
+  // },
   {
-    id: "housing",
-    name: "Housing",
-    type: "EXPENSE",
-    color: "#ef4444", // red-500
-    icon: "Home",
-    subcategories: ["Rent", "Mortgage", "Property Tax", "Maintenance"],
+    id: 'food',
+    name: 'Food',
+    type: 'EXPENSE',
+    color: '#f43f5e', // rose-500
+    icon: 'UtensilsCrossed',
   },
   {
-    id: "transportation",
-    name: "Transportation",
-    type: "EXPENSE",
-    color: "#f97316", // orange-500
-    icon: "Car",
-    subcategories: ["Fuel", "Public Transport", "Maintenance", "Parking"],
+    id: 'transportation',
+    name: 'Transportation',
+    type: 'EXPENSE',
+    color: '#f97316', // orange-500
+    icon: 'Car',
+    subcategories: ['Fuel', 'Public Transport', 'Maintenance', 'Parking'],
   },
   {
-    id: "groceries",
-    name: "Groceries",
-    type: "EXPENSE",
-    color: "#84cc16", // lime-500
-    icon: "Shopping",
+    id: 'groceries',
+    name: 'Groceries',
+    type: 'EXPENSE',
+    color: '#84cc16', // lime-500
+    icon: 'Shopping',
   },
   {
-    id: "utilities",
-    name: "Utilities",
-    type: "EXPENSE",
-    color: "#06b6d4", // cyan-500 -> Duplicate
-    icon: "Zap",
-    subcategories: ["Electricity", "Water", "Gas", "Internet", "Phone"],
+    id: 'utilities',
+    name: 'Utilities',
+    type: 'EXPENSE',
+    color: '#06b6d4', // cyan-500 -> Duplicate
+    icon: 'Zap',
+    subcategories: ['Electricity', 'Water', 'Gas', 'Internet', 'Phone'],
   },
   {
-    id: "investments",
-    name: "Investments",
-    type: "EXPENSE",
-    color: "#8b5cf6", // violet-500 -> Changed to avoid duplicate with INCOME investments
-    icon: "TrendingUp",
+    id: 'investments',
+    name: 'Investments',
+    type: 'EXPENSE',
+    color: '#8b5cf6', // violet-500 -> Changed to avoid duplicate with INCOME investments
+    icon: 'TrendingUp',
   },
   {
-    id: "entertainment",
-    name: "Entertainment",
-    type: "EXPENSE",
-    color: "#facc15", // yellow-500
-    icon: "Film",
-    subcategories: ["Movies", "Games", "Streaming Services"],
+    id: 'entertainment',
+    name: 'Entertainment',
+    type: 'EXPENSE',
+    color: '#facc15', // yellow-500
+    icon: 'Film',
+    subcategories: ['Movies', 'Games', 'Streaming Services'],
+  },
+
+  {
+    id: 'shopping',
+    name: 'Shopping',
+    type: 'EXPENSE',
+    color: '#ec4899', // pink-500 -> Duplicate
+    icon: 'ShoppingBag',
+    subcategories: ['Clothing', 'Electronics', 'Home Goods'],
   },
   {
-    id: "food",
-    name: "Food",
-    type: "EXPENSE",
-    color: "#f43f5e", // rose-500
-    icon: "UtensilsCrossed",
+    id: 'healthcare',
+    name: 'Healthcare',
+    type: 'EXPENSE',
+    color: '#14b8a6', // teal-500
+    icon: 'HeartPulse',
+    subcategories: ['Medical', 'Dental', 'Pharmacy', 'Insurance'],
   },
   {
-    id: "shopping",
-    name: "Shopping",
-    type: "EXPENSE",
-    color: "#ec4899", // pink-500 -> Duplicate
-    icon: "ShoppingBag",
-    subcategories: ["Clothing", "Electronics", "Home Goods"],
+    id: 'education',
+    name: 'Education',
+    type: 'EXPENSE',
+    color: '#10b981', // emerald-500
+    icon: 'GraduationCap',
+    subcategories: ['Tuition', 'Books', 'Courses'],
   },
   {
-    id: "healthcare",
-    name: "Healthcare",
-    type: "EXPENSE",
-    color: "#14b8a6", // teal-500
-    icon: "HeartPulse",
-    subcategories: ["Medical", "Dental", "Pharmacy", "Insurance"],
+    id: 'personal',
+    name: 'Personal Care',
+    type: 'EXPENSE',
+    color: '#d946ef', // fuchsia-500
+    icon: 'Smile',
+    subcategories: ['Haircut', 'Gym', 'Beauty'],
   },
   {
-    id: "education",
-    name: "Education",
-    type: "EXPENSE",
-    color: "#10b981", // emerald-500
-    icon: "GraduationCap",
-    subcategories: ["Tuition", "Books", "Courses"],
+    id: 'travel',
+    name: 'Travel',
+    type: 'EXPENSE',
+    color: '#0ea5e9', // sky-500
+    icon: 'Plane',
   },
   {
-    id: "personal",
-    name: "Personal Care",
-    type: "EXPENSE",
-    color: "#d946ef", // fuchsia-500
-    icon: "Smile",
-    subcategories: ["Haircut", "Gym", "Beauty"],
+    id: 'insurance',
+    name: 'Insurance',
+    type: 'EXPENSE',
+    color: '#64748b', // slate-500 -> Duplicate
+    icon: 'Shield',
+    subcategories: ['Life', 'Home', 'Vehicle'],
   },
   {
-    id: "travel",
-    name: "Travel",
-    type: "EXPENSE",
-    color: "#0ea5e9", // sky-500
-    icon: "Plane",
+    id: 'gifts',
+    name: 'Gifts & Donations',
+    type: 'EXPENSE',
+    color: '#f472b6', // pink-400
+    icon: 'Gift',
   },
   {
-    id: "insurance",
-    name: "Insurance",
-    type: "EXPENSE",
-    color: "#64748b", // slate-500 -> Duplicate
-    icon: "Shield",
-    subcategories: ["Life", "Home", "Vehicle"],
+    id: 'recharge',
+    name: 'Recharge',
+    type: 'EXPENSE',
+    color: '#e879f9', // purple-400
+    icon: 'Recharge',
   },
   {
-    id: "gifts",
-    name: "Gifts & Donations",
-    type: "EXPENSE",
-    color: "#f472b6", // pink-400
-    icon: "Gift",
+    id: 'emi',
+    name: 'EMI',
+    type: 'EXPENSE',
+    color: '#fb923c', // amber-400
+    icon: 'EMI',
   },
   {
-    id: "recharge",
-    name: "Recharge",
-    type: "EXPENSE",
-    color: "#e879f9", // purple-400
-    icon: "Recharge",
+    id: 'family-maintenance',
+    name: 'Family Maintenance',
+    type: 'EXPENSE',
+    color: '#c084fc', // purple-400
+    icon: 'Users',
+    subcategories: ['Childcare', 'Elderly Care', 'Family Support'],
   },
   {
-    id: "emi",
-    name: "EMI",
-    type: "EXPENSE",
-    color: "#fb923c", // amber-400
-    icon: "EMI",
+    id: 'other-expense',
+    name: 'Other Expenses',
+    type: 'EXPENSE',
+    color: '#94a3b8', // slate-400
+    icon: 'MoreHorizontal',
   },
-  {
-    id: "other-expense",
-    name: "Other Expenses",
-    type: "EXPENSE",
-    color: "#94a3b8", // slate-400
-    icon: "MoreHorizontal",
-  },
-];
+]
 
 export const categoryColors = defaultCategories.reduce((acc, category) => {
-  acc[category.id] = category.color;
-  return acc;
-}, {});
+  acc[category.id] = category.color
+  return acc
+}, {})
