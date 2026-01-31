@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2 } from "lucide-react";
 import useFetch from "@/hooks/use-fetch";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -30,6 +31,7 @@ import { accountSchema } from "@/app/lib/schema";
 
 export function CreateAccountDrawer({ children }) {
   const [open, setOpen] = useState(false);
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -63,8 +65,9 @@ export function CreateAccountDrawer({ children }) {
       toast.success("Account created successfully");
       reset();
       setOpen(false);
+      router.refresh();
     }
-  }, [newAccount, reset]);
+  }, [newAccount, reset, router]);
 
   useEffect(() => {
     if (error) {
