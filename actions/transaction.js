@@ -69,6 +69,9 @@ export async function createTransaction(data) {
     const balanceChange = data.type === "EXPENSE" ? -data.amount : data.amount;
     const newBalance = account.balance.toNumber() + balanceChange;
 
+    // Debug: Log the date being received
+    console.log("Transaction date received:", data.date, typeof data.date);
+
     // Create transaction and update account balance
     const transaction = await db.$transaction(async (tx) => {
       const newTransaction = await tx.transaction.create({
@@ -295,6 +298,7 @@ export async function scanReceipt(file) {
 // Helper function to calculate next recurring date
 function calculateNextRecurringDate(startDate, interval) {
   const date = new Date(startDate);
+  const originalDay = date.getDate();
 
   switch (interval) {
     case "DAILY":
@@ -304,16 +308,37 @@ function calculateNextRecurringDate(startDate, interval) {
       date.setDate(date.getDate() + 7);
       break;
     case "MONTHLY":
-      date.setMonth(date.getMonth() + 1);
+      const targetMonth = date.getMonth() + 1;
+      date.setMonth(targetMonth);
+      // Fix for month-end dates: If the day changed unexpectedly
+      // (e.g., Jan 31 -> Mar 3 because Feb doesn't have 31 days),
+      // AND we've gone past the target month, set to last day of target month
+      if (date.getDate() !== originalDay && date.getMonth() !== targetMonth % 12) {
+        date.setDate(0); // Sets to last day of previous (target) month
+      }
       break;
     case "YEARLY":
       date.setFullYear(date.getFullYear() + 1);
+      // Fix for leap year edge case (Feb 29 -> Mar 1 in non-leap years)
+      if (date.getDate() !== originalDay) {
+        date.setDate(0);
+      }
       break;
     case "SEMIANNUAL":
+      const targetMonthSemi = (date.getMonth() + 6) % 12;
       date.setMonth(date.getMonth() + 6);
+      // Fix for month-end dates
+      if (date.getDate() !== originalDay && date.getMonth() !== targetMonthSemi) {
+        date.setDate(0);
+      }
       break;
     case "QUARTERLY":
+      const targetMonthQuart = (date.getMonth() + 3) % 12;
       date.setMonth(date.getMonth() + 3);
+      // Fix for month-end dates
+      if (date.getDate() !== originalDay && date.getMonth() !== targetMonthQuart) {
+        date.setDate(0);
+      }
       break;
     default:
       throw new Error("Invalid interval provided");

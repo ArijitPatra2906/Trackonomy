@@ -44,14 +44,13 @@ export const defaultCategories = [
   },
 
   // Expense Categories
-  // {
-  //   id: 'housing',
-  //   name: 'Housing',
-  //   type: 'EXPENSE',
-  //   color: '#ef4444', // red-500
-  //   icon: 'Home',
-  //   subcategories: ['Rent', 'Mortgage', 'Property Tax', 'Maintenance'],
-  // },
+  {
+    id: 'rent',
+    name: 'Rent',
+    type: 'EXPENSE',
+    color: '#ef4444', // red-500
+    icon: 'Home',
+  },
   {
     id: 'food',
     name: 'Food',
