@@ -21,6 +21,9 @@ const nextConfig = {
   compiler: {
     removeConsole: process.env.NODE_ENV !== "development", // Remove console.log in production
   },
+
+  // Empty turbopack config to allow webpack from next-pwa
+  turbopack: {},
 };
 
 export default withPWA({
