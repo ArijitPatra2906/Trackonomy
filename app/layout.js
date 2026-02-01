@@ -53,6 +53,18 @@ export default function RootLayout({ children }) {
   return (
     <ClerkProvider>
       <html lang="en" suppressHydrationWarning>
+        <head>
+          <link rel="icon" href="/android-chrome-192x192.png" />
+          <link rel="manifest" href="/manifest.json" />
+          <meta name="theme-color" content="#35155D" />
+          <meta name="mobile-web-app-capable" content="yes" />
+          <meta name="apple-mobile-web-app-capable" content="yes" />
+          <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+          <meta name="apple-mobile-web-app-title" content="Trackonomy" />
+          <link rel="apple-touch-icon" href="/android-chrome-192x192.png" />
+          <link rel="apple-touch-icon" sizes="192x192" href="/android-chrome-192x192.png" />
+          <link rel="apple-touch-icon" sizes="512x512" href="/android-chrome-512x512.png" />
+        </head>
         <body className={`${inter.className}`}>
           <Header />
           <main className="min-h-screen">{children}</main>

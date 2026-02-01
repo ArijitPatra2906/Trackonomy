@@ -18,18 +18,22 @@ const serializeTransaction = (obj) => {
 };
 
 export async function getUserAccounts() {
-  const { userId } = await auth();
-  if (!userId) throw new Error("Unauthorized");
-
-  const user = await db.user.findUnique({
-    where: { clerkUserId: userId },
-  });
-
-  if (!user) {
-    throw new Error("User not found");
-  }
-
   try {
+    const { userId } = await auth();
+    if (!userId) {
+      console.error("No userId found");
+      return [];
+    }
+
+    const user = await db.user.findUnique({
+      where: { clerkUserId: userId },
+    });
+
+    if (!user) {
+      console.error("User not found in database");
+      return [];
+    }
+
     const accounts = await db.account.findMany({
       where: { userId: user.id },
       orderBy: { createdAt: "desc" },
@@ -47,7 +51,8 @@ export async function getUserAccounts() {
 
     return serializedAccounts;
   } catch (error) {
-    console.error(error.message);
+    console.error("Error fetching user accounts:", error.message);
+    return [];
   }
 }
 
@@ -127,7 +132,7 @@ export async function createAccount(data) {
     // Serialize the account before returning
     const serializedAccount = serializeTransaction(account);
 
-    revalidatePath("/dashboard");
+    revalidatePath("/dashboard", "page");
     return { success: true, data: serializedAccount };
   } catch (error) {
     throw new Error(error.message);
@@ -135,22 +140,31 @@ export async function createAccount(data) {
 }
 
 export async function getDashboardData() {
-  const { userId } = await auth();
-  if (!userId) throw new Error("Unauthorized");
+  try {
+    const { userId } = await auth();
+    if (!userId) {
+      console.error("No userId found");
+      return [];
+    }
 
-  const user = await db.user.findUnique({
-    where: { clerkUserId: userId },
-  });
+    const user = await db.user.findUnique({
+      where: { clerkUserId: userId },
+    });
 
-  if (!user) {
-    throw new Error("User not found");
+    if (!user) {
+      console.error("User not found in database");
+      return [];
+    }
+
+    // Get all user transactions
+    const transactions = await db.transaction.findMany({
+      where: { userId: user.id },
+      orderBy: { date: "desc" },
+    });
+
+    return transactions.map(serializeTransaction);
+  } catch (error) {
+    console.error("Error fetching dashboard data:", error.message);
+    return [];
   }
-
-  // Get all user transactions
-  const transactions = await db.transaction.findMany({
-    where: { userId: user.id },
-    orderBy: { date: "desc" },
-  });
-
-  return transactions.map(serializeTransaction);
 }

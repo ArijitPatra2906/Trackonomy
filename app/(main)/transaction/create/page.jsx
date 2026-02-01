@@ -5,12 +5,20 @@ import { getTransaction } from "@/actions/transaction";
 
 export default async function AddTransactionPage({ searchParams }) {
   const accounts = await getUserAccounts();
-  const editId = searchParams?.edit;
+  const params = await searchParams;
+  const editId = params?.edit;
+
+  // Ensure accounts is an array
+  const safeAccounts = Array.isArray(accounts) ? accounts : [];
 
   let initialData = null;
   if (editId) {
-    const transaction = await getTransaction(editId);
-    initialData = transaction;
+    try {
+      const transaction = await getTransaction(editId);
+      initialData = transaction;
+    } catch (error) {
+      console.error("Error fetching transaction:", error);
+    }
   }
 
   return (
@@ -21,7 +29,7 @@ export default async function AddTransactionPage({ searchParams }) {
         </h1>
       </div>
       <AddTransactionForm
-        accounts={accounts}
+        accounts={safeAccounts}
         categories={defaultCategories}
         editMode={!!editId}
         initialData={initialData}
