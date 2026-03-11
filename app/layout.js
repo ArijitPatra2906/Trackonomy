@@ -54,16 +54,20 @@ export default function RootLayout({ children }) {
     <ClerkProvider>
       <html lang="en" suppressHydrationWarning>
         <head>
-          <link rel="icon" href="/android-chrome-192x192.png" />
+          <link rel="icon" href="/icons/android-chrome-192x192.png" />
           <link rel="manifest" href="/manifest.json" />
-          <meta name="theme-color" content="#35155D" />
+          <meta name="theme-color" content="#ffffff" />
           <meta name="mobile-web-app-capable" content="yes" />
           <meta name="apple-mobile-web-app-capable" content="yes" />
-          <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+          <meta name="apple-mobile-web-app-status-bar-style" content="default" />
           <meta name="apple-mobile-web-app-title" content="Trackonomy" />
-          <link rel="apple-touch-icon" href="/android-chrome-192x192.png" />
-          <link rel="apple-touch-icon" sizes="192x192" href="/android-chrome-192x192.png" />
-          <link rel="apple-touch-icon" sizes="512x512" href="/android-chrome-512x512.png" />
+          <link rel="apple-touch-icon" href="/icons/android-chrome-192x192.png" />
+          <link rel="apple-touch-icon" sizes="192x192" href="/icons/android-chrome-192x192.png" />
+          <link rel="apple-touch-icon" sizes="512x512" href="/icons/android-chrome-512x512.png" />
+
+          {/* PWA Splash Screens */}
+          <meta name="msapplication-TileColor" content="#ffffff" />
+          <meta name="msapplication-tap-highlight" content="no" />
         </head>
         <body className={`${inter.className}`}>
           <Header />
