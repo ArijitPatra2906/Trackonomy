@@ -64,10 +64,6 @@ export default function RootLayout({ children }) {
           <link rel="apple-touch-icon" href="/icons/android-chrome-192x192.png" />
           <link rel="apple-touch-icon" sizes="192x192" href="/icons/android-chrome-192x192.png" />
           <link rel="apple-touch-icon" sizes="512x512" href="/icons/android-chrome-512x512.png" />
-
-          {/* PWA Splash Screens */}
-          <meta name="msapplication-TileColor" content="#ffffff" />
-          <meta name="msapplication-tap-highlight" content="no" />
         </head>
         <body className={`${inter.className}`}>
           <Header />
