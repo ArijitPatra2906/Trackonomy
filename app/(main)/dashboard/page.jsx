@@ -4,6 +4,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Plus } from "lucide-react";
 import React from "react";
 import { AccountCard } from "./_components/account-card";
+
+export const dynamic = "force-dynamic";
 import { getCurrentBudget } from "@/actions/budget";
 import { BudgetProgress } from "./_components/budget-progress";
 import { DashboardOverview } from "./_components/transaction-overview";

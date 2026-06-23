@@ -51,7 +51,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <ClerkProvider>
+    <ClerkProvider publishableKey={process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY || "pk_test_bGl2ZS1jb25ndS0xMC5jbGVyay5hY2NvdW50cy5kZXYk"}>
       <html lang="en" suppressHydrationWarning>
         <head>
           <link rel="icon" href="/icons/android-chrome-192x192.png" />
